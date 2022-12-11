@@ -1,7 +1,9 @@
 <?php 
 
+
+// COMANDO SELECT NA TABELA DE DADOS
 include_once('conexao.php');
-$consulta = "SELECT * FROM usuarios"; 
+$consulta = "SELECT * FROM dados"; 
     $con = $conexao->query($consulta) or die($mysqli->error);
 
 ?>
@@ -20,25 +22,40 @@ $consulta = "SELECT * FROM usuarios";
 <body>
     <div class="container-fluid">
         <main class="pb-5">
-            <h2 style="margin-top: 15px;">FEIRAS</h2>
+            <h2 style="margin-top: 15px;">DADOS</h2>
 
 
 
             <table class="table mt-4">
                 <thead class="thead bg-white">
                     <tr>
-                        <th>Login</th>
-                        <th>Senha</th>
+                        <th>Temperatura</th>
+                        <th>Luminosidade</th>
+                        <th>Co²</th>
+
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- CONTEÚDO DA TABELA -->
-                    <?php while($dado = $con->fetch_array()) { ?>
-                    <tr>
-                        <td class="align-middle"><?php echo $dado['login']; ?></td>
-                        <td class="align-middle"><?php echo $dado['senha']; ?></td>
 
-                    </tr>
+                     <!-- FORM PARA PEGAR O DADO QUE USUARIO DIGITAR-->
+                    <form method="post" action="dados.php">
+                        Digite a temperatura <input type="text" id="intemp" name="intemp">
+                        <input type="submit" value="enviar">
+                    </form> 
+                    
+                    <!-- EXIBIR OS DADOS BANCO -->
+                    <?php while($dado = $con->fetch_array()) { ?>
+                    <?php
+                        // IF PARA COMPARAR SE A TEMEPATURA É MAIOR QUE O VALOR QUE USUARIO DIGITOU
+                        if($dado['temp'] >= $_POST['intemp']){ // $_POST['intemp'] PEGA O VALOR QUE USUARIO DIGITOU E COMPARA NO IF
+                            echo "<tr>
+                            <td> " . $dado['temp'] . "</td>             
+                            <td > " . $dado['temp'] . "</td>
+                            <td > " . $dado['co2'] . "</td>
+                    </tr>";
+                        }
+                        ?>
+
                     <?php } ?>
                 </tbody>
             </table>
