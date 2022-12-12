@@ -3,9 +3,8 @@
     
         include_once('conexao.php');
         
-
-        $sql = "SELECT * FROM dados";
-        $result = $conexao->query($sql);
+        $consulta = "SELECT * FROM pesq  order by id desc"; 
+          $con = $conexao->query($consulta) or die($mysqli->error);
 
    
 ?>

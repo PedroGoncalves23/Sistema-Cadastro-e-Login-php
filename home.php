@@ -10,8 +10,9 @@
     }
 
     include_once('conexao.php');
-    $consulta = "SELECT * FROM dados"; 
+    $consulta = "SELECT * FROM dados order by id desc LIMIT 10"; 
     $con = $conexao->query($consulta) or die($mysqli->error);
+
 ?>
 
 <!DOCTYPE html>
@@ -19,6 +20,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="refresh" content="3600">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
@@ -57,26 +59,27 @@
                 </thead>
                 <tbody>
 
-                     <!-- FORM PARA PEGAR O DADO QUE USUARIO DIGITAR-->
-                    <form method="post" action="home.php">
-                        Digite a temperatura <input type="text" id="intemp" name="intemp">
-                        <input type="submit" value="enviar">
-                    </form> 
-                    
+                    <!-- FORM PARA PEGAR O DADO QUE USUARIO DIGITAR-->
+
+
                     <!-- EXIBIR OS DADOS BANCO -->
                     <?php while($dado = $con->fetch_array()) { ?>
                     <?php
                         // IF PARA COMPARAR SE A TEMEPATURA É MAIOR QUE O VALOR QUE USUARIO DIGITOU
-                        if($dado['temp'] >= $_POST['intemp']){ // $_POST['intemp'] PEGA O VALOR QUE USUARIO DIGITOU E COMPARA NO IF
+                      
                             echo "<tr>
                             <td> " . $dado['temp'] . "</td>             
-                            <td > " . $dado['temp'] . "</td>
+                            <td > " . $dado['lumi'] . "</td>
                             <td > " . $dado['co2'] . "</td>
                     </tr>";
-                        }
-                        ?>
 
+                        
+                        
+                        ?>
                     <?php } ?>
+
+
+
                 </tbody>
             </table>
         </main>
@@ -119,8 +122,17 @@
                         "Domingo",
                     ],
 
-                 
+                    <?php while($dado = $con->fetch_array()) { ?>
+                    <?php
+                        // IF PARA COMPARAR SE A TEMEPATURA É MAIOR QUE O VALOR QUE USUARIO DIGITOU
+                            echo "<tr>
+                            <td> " . $dado['temp'] . "</td>             
+                            <td > " . $dado['temp'] . "</td>
+                            <td > " . $dado['co2'] . "</td>
+                    </tr>";
+                        }
                     
+                    ?>
 
                     datasets: [{
                             label: "Luminosidade",
@@ -152,6 +164,8 @@
         </div> -->
         </div>
         </div>
+
+
 
     </header>
     <!-- <nav>
